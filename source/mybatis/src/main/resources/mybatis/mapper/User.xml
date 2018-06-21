@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mattdamon.pojo.User">
+
+	<resultMap id="userResultMap" type="com.mattdamon.pojo.User">
+		<id property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="shipid" column="shipid" />
+	</resultMap>
+
+	<select id="selectOne" parameterType="com.mattdamon.pojo.User"
+		resultType="com.mattdamon.pojo.User">
+		SELECT * FROM user
+		WHERE id=#{id}
+	</select>
+	<insert id="insert" parameterType="com.mattdamon.pojo.User"
+		flushCache="true">
+		INSERT INTO user (username,password,shipid)
+		VALUES(#{username},#{password},#{shipid})
+	</insert>
+	<update id="update" parameterType="com.mattdamon.pojo.User">
+		UPDATE user
+		SET
+		password=#{password},username=#{username},shipid=#{shipid}
+		WHERE
+		id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM user
+	</delete>
+	<select id="query" parameterType="java.util.Map" resultMap="userResultMap">
+		SELECT * from
+		user
+		<if test="_parameter.containsKey('username')">
+			WHERE username like #{username}
+		</if>
+	</select>
+
+	<select id="queryByShipId" parameterType="java.util.Map"
+		resultMap="userResultMap">
+		SELECT * from
+		user
+		WHERE shipid=#{shipid}
+	</select>
+
+</mapper> 

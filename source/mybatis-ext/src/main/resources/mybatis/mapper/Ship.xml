@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mattdamon.pojo.Ship">
+
+	<resultMap id="shipResultMap" type="com.mattdamon.pojo.Ship">
+		<id property="id" column="id" />
+		<result property="groupname" column="groupname" />
+		<!-- <collection property="userList" column="id" ofType="com.mattdamon.pojo.Ship" 
+			select="com.mattdamon.pojo.User.queryByShipId"> </collection> -->
+		<collection property="userList" javaType="ArrayList"
+			resultMap="com.mattdamon.pojo.User.userResultMap">
+		</collection>
+	</resultMap>
+
+	<select id="selectOne" parameterType="com.mattdamon.pojo.Ship"
+		resultType="com.mattdamon.pojo.Ship">
+		SELECT * FROM ship WHERE id=#{id}
+	</select>
+	<insert id="insert" parameterType="com.mattdamon.pojo.Ship"
+		flushCache="true">
+		INSERT INTO ship (groupname)
+		VALUES(#{groupname})
+	</insert>
+	<update id="update" parameterType="com.mattdamon.pojo.Ship">
+		UPDATE ship
+		SET
+		groupname=#{groupname}
+		WHERE id=#{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM ship
+	</delete>
+
+	<select id="query" parameterType="java.util.Map" resultMap="shipResultMap">
+		SELECT
+		s.id as shipid,s.groupname,u.id as uid,u.username,u.password,u.shipid
+		from ship s
+		left join user u on s.id = u.shipid
+		where 1=1
+		<if test="_parameter.containsKey('groupname')">
+			and s.groupname like #{groupname}
+		</if>
+	</select>
+
+
+</mapper> 
