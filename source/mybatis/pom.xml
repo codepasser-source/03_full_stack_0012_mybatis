@@ -7,7 +7,7 @@
 		<project.build.finalName>mybatis</project.build.finalName>
 		<project.build.context>/mybatis</project.build.context>
 		<project.build.encoding>UTF-8</project.build.encoding>
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>5.3.18</spring.version>
 		<hibernate.version>4.3.4.Final</hibernate.version>
 		<project.install.phase>uat</project.install.phase>
 	</properties>
